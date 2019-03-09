@@ -1,11 +1,12 @@
 package com.example.contacts.login;
 
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.contacts.R;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,10 +18,15 @@ public class LoginActivity extends AppCompatActivity {
                 return;
         }
 
-        LoginFragment loginFragment = new LoginFragment();
+        LoginFragment loginFragment = LoginFragment.newInstance();
 
         getSupportFragmentManager().beginTransaction()
                                     .add(R.id.login_fragment_container, loginFragment)
                                     .commit();
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
