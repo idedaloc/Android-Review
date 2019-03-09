@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Contacts</string>
+
+    <!--Login Screen-->
+    <string name="user_hint">User</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button">Login</string>
+
+
+</resources>
