@@ -22,7 +22,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link LoginFragment.OnSuccesfulLoginListener} interface
+ * {@link LoginFragment.OnSuccessfullyLoginListener} interface
  * to handle interaction events.
  * Use the {@link LoginFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -37,7 +37,7 @@ public class LoginFragment extends Fragment {
 
     private MessageDigest mMessageDigest;
 
-    private OnSuccesfulLoginListener mListener;
+    private OnSuccessfullyLoginListener mListener;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -76,6 +76,7 @@ public class LoginFragment extends Fragment {
                                     .hashString(mPasswordET.getText().toString(), StandardCharsets.UTF_8)
                                     .toString();
 
+                        mListener.onSuccessfullyLogin(mUserName);
                     }
                 });
     }
@@ -101,8 +102,8 @@ public class LoginFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if (context instanceof OnSuccesfulLoginListener) {
-            mListener = (OnSuccesfulLoginListener) context;
+        if (context instanceof OnSuccessfullyLoginListener) {
+            mListener = (OnSuccessfullyLoginListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -125,7 +126,7 @@ public class LoginFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnSuccesfulLoginListener {
-        void onSuccesfullLogin(String user, String password);
+    public interface OnSuccessfullyLoginListener {
+        void onSuccessfullyLogin(String user);
     }
 }

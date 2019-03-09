@@ -8,7 +8,7 @@ import android.os.Bundle;
 import com.example.contacts.R;
 import com.example.contacts.home.HomeActivity;
 
-public class LoginActivity extends AppCompatActivity implements LoginFragment.OnSuccesfulLoginListener {
+public class LoginActivity extends AppCompatActivity implements LoginFragment.OnSuccessfullyLoginListener {
 
     private static String USER = "com.example.contacts.login.USER";
     private static String PASSWORD = "com.example.login.contacts.password";
@@ -32,10 +32,9 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 
 
     @Override
-    public void onSuccesfullLogin(String user, String password) {
+    public void onSuccessfullyLogin(String user) {
         Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtra(USER,user);
-        intent.putExtra(PASSWORD,password);
         startActivity(intent);
     }
 }
