@@ -22,12 +22,20 @@ public class LoginPresenter {
                 .toString());
         user2.setAuthorized(true);
 
-        switch(userDTO.getUserName()){
-            case "j":return user1;
-            case "f":return user2;
-            default: userDTO.setAuthorized(false);
-                    return userDTO;
+        switch (userDTO.getUserName()) {
+            case "j":
+                if (userDTO.getPassword().equals(user1.getPassword()))
+                    return user1;
+                break;
+            case "k":
+                if (userDTO.getPassword().equals(user2.getPassword()))
+                    return user2;
+                break;
+            default:
+                userDTO.setAuthorized(false);
         }
-
+        return userDTO;
     }
+
 }
+

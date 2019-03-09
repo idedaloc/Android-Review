@@ -1,7 +1,6 @@
 package com.example.contacts.login;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -12,7 +11,6 @@ import com.example.contacts.home.HomeActivity;
 public class LoginActivity extends AppCompatActivity implements LoginFragment.OnSuccessfullyLoginListener {
 
     private static String USER = "com.example.contacts.login.USER";
-    private static String PASSWORD = "com.example.login.contacts.password";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

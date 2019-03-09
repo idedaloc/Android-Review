@@ -77,7 +77,7 @@ public class LoginFragment extends Fragment {
                         String userName = mUserNameET.getText().toString();
                         String password = mPasswordET.getText().toString();
 
-                        if(userName == null || password == null)
+                        if(userName.equals("") || password.equals(""))
                             Toast.makeText(getActivity().getApplication(),R.string.required_fileds_error,Toast.LENGTH_SHORT).show();
 
                         mUserDTO.setUserName(userName);
