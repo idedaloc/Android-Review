@@ -71,8 +71,10 @@ public class LoginFragment extends Fragment {
                                     .hashString(password, StandardCharsets.UTF_8)
                                     .toString());
 
-                        if(LoginPresenter.validateLogin(mUserDTO).isAuthorized())
-                            mListener.onSuccessfullyLogin(mUserDTO);
+                        UserDTO validatedUserDTO = LoginPresenter.validateLogin(mUserDTO);
+
+                        if(validatedUserDTO.isAuthorized())
+                            mListener.onSuccessfullyLogin(validatedUserDTO);
                         else
                             Toast.makeText(getActivity().getApplicationContext(),R.string.user_authorization_error,Toast.LENGTH_SHORT).show();
                     }

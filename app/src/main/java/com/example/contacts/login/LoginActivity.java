@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
     @Override
     public void onSuccessfullyLogin(UserDTO userDTO) {
         Intent intent = new Intent(this, HomeActivity.class);
-        intent.putExtra("t", (Serializable)userDTO);
+        intent.putExtra("t", userDTO);
         startActivity(intent);
         finish();
     }

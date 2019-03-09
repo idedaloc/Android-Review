@@ -26,8 +26,9 @@ public class HomePresenter {
                 addItem(createDummyItem(i));
             }
         }else if(userId == 2){
-            for (int i = 1; COUNT / 2 <= COUNT; i++) {
+            for (int i = COUNT / 2; i < COUNT; i++) {
                 addItem(createDummyItem(i));
+                System.out.println(i);
             }
         }
     }
@@ -44,9 +45,6 @@ public class HomePresenter {
     private static String makeDetails(int position) {
         StringBuilder builder = new StringBuilder();
         builder.append("Details about Item: ").append(position);
-        for (int i = 0; i < position; i++) {
-            builder.append("\nMore details information here.");
-        }
         return builder.toString();
     }
 

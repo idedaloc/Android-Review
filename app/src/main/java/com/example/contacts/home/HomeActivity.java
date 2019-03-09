@@ -21,7 +21,7 @@ public class HomeActivity extends AppCompatActivity implements ContactFragment.O
                 return;
         }
 
-        userDTO = (UserDTO) this.getIntent().getParcelableExtra("t");
+        userDTO = (UserDTO) getIntent().getExtras().getParcelable("t");
 
         ContactFragment contactFragment = ContactFragment.newInstance(userDTO.getUserId());
 
