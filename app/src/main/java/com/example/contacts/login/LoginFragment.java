@@ -8,29 +8,36 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 
 import com.example.contacts.R;
+import com.google.common.hash.Hashing;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link LoginFragment.OnFragmentInteractionListener} interface
+ * {@link LoginFragment.OnSuccesfulLoginListener} interface
  * to handle interaction events.
  * Use the {@link LoginFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class LoginFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String mUserName;
+    private String mPassword;
+    private EditText mUserNameET;
+    private EditText mPasswordET;
+    private Button mLoginB;
 
-    private OnFragmentInteractionListener mListener;
+    private MessageDigest mMessageDigest;
+
+    private OnSuccesfulLoginListener mListener;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -55,24 +62,47 @@ public class LoginFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mLoginB.setOnClickListener(
+
+                //() -> System.out.print("**********************"));
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mUserName = mUserNameET. getText().toString();
+
+                        mPassword = Hashing.sha256()
+                                    .hashString(mPasswordET.getText().toString(), StandardCharsets.UTF_8)
+                                    .toString();
+
+                    }
+                });
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        mUserNameET = view.findViewById(R.id.editText_user);
+        mPasswordET = view.findViewById(R.id.editText_password);
+        mLoginB = view.findViewById(R.id.button_login);
+
+        return view;
     }
 
+
+
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+
+        if (context instanceof OnSuccesfulLoginListener) {
+            mListener = (OnSuccesfulLoginListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -95,8 +125,7 @@ public class LoginFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    public interface OnSuccesfulLoginListener {
+        void onSuccesfullLogin(String user, String password);
     }
 }
