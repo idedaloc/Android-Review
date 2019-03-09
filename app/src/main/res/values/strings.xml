@@ -7,6 +7,7 @@
     <string name="login_button">Login</string>
     <string name="required_fileds_error">All fields required</string>
     <string name="user_authorization_error">Invalid user or password</string>
+    <string name="user_login_home">com.example.contacts.login.USER</string>
 
 
 </resources>

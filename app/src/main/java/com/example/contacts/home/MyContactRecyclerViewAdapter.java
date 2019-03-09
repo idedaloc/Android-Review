@@ -8,21 +8,21 @@ import android.widget.TextView;
 
 import com.example.contacts.R;
 import com.example.contacts.home.ContactFragment.OnItemSelectedListener;
-import com.example.contacts.home.dummy.DummyContent.DummyItem;
+import com.example.contacts.home.presenter.HomePresenter;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link } and makes a call to the
  * specified {@link ContactFragment.OnItemSelectedListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyContactRecyclerViewAdapter extends RecyclerView.Adapter<MyContactRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<HomePresenter.DummyItem> mValues;
     private final OnItemSelectedListener mListener;
 
-    public MyContactRecyclerViewAdapter(List<DummyItem> items, OnItemSelectedListener listener) {
+    public MyContactRecyclerViewAdapter(List<HomePresenter.DummyItem> items, OnItemSelectedListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -61,7 +61,7 @@ public class MyContactRecyclerViewAdapter extends RecyclerView.Adapter<MyContact
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public HomePresenter.DummyItem mItem;
 
         public ViewHolder(View view) {
             super(view);

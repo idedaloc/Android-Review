@@ -1,8 +1,11 @@
 package com.example.contacts.dtos;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
-public class UserDTO implements Serializable {
+public class UserDTO implements Parcelable {
     private Long userId;
     private String userName;
     private String password;
@@ -38,5 +41,15 @@ public class UserDTO implements Serializable {
 
     public void setAuthorized(boolean authorized) {
         this.authorized = authorized;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }

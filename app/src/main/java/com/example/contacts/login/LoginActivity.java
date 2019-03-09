@@ -8,9 +8,9 @@ import com.example.contacts.R;
 import com.example.contacts.dtos.UserDTO;
 import com.example.contacts.home.HomeActivity;
 
-public class LoginActivity extends AppCompatActivity implements LoginFragment.OnSuccessfullyLoginListener {
+import java.io.Serializable;
 
-    private static String USER = "com.example.contacts.login.USER";
+public class LoginActivity extends AppCompatActivity implements LoginFragment.OnSuccessfullyLoginListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
     @Override
     public void onSuccessfullyLogin(UserDTO userDTO) {
         Intent intent = new Intent(this, HomeActivity.class);
-        intent.putExtra(USER, userDTO);
+        intent.putExtra("t", (Serializable)userDTO);
         startActivity(intent);
         finish();
     }

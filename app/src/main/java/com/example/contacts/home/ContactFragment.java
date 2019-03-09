@@ -3,7 +3,6 @@ package com.example.contacts.home;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,20 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.contacts.R;
-import com.example.contacts.home.dummy.DummyContent;
-import com.example.contacts.home.dummy.DummyContent.DummyItem;
+import com.example.contacts.home.presenter.HomePresenter;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnItemSelectedListener}
- * interface.
- */
 public class ContactFragment extends Fragment {
 
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
+    private static final String USER = "user";
+
+    private Long userId;
     private OnItemSelectedListener mListener;
 
     /**
@@ -34,15 +26,12 @@ public class ContactFragment extends Fragment {
     public ContactFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static ContactFragment newInstance(
-            //int columnCount
-    ) {
+
+    public static ContactFragment newInstance(Long userId) {
         ContactFragment fragment = new ContactFragment();
         Bundle args = new Bundle();
-        // args.putInt(ARG_COLUMN_COUNT, columnCount);
-        //fragment.setArguments(args);
+        args.putLong(USER, userId);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -51,7 +40,7 @@ public class ContactFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            userId = getArguments().getLong(USER);
         }
     }
 
@@ -68,7 +57,7 @@ public class ContactFragment extends Fragment {
 
             //DummyContent.setSelection()
 
-            recyclerView.setAdapter(new MyContactRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyContactRecyclerViewAdapter(new HomePresenter(userId).getList(), mListener));
         }
         return view;
     }
@@ -103,6 +92,6 @@ public class ContactFragment extends Fragment {
      */
     public interface OnItemSelectedListener {
         // TODO: Update argument type and name
-        void onItemSelected(DummyItem item);
+        void onItemSelected(HomePresenter.DummyItem item);
     }
 }

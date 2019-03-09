@@ -4,10 +4,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.contacts.R;
-import com.example.contacts.home.dummy.DummyContent;
-import com.example.contacts.login.LoginFragment;
+import com.example.contacts.dtos.UserDTO;
+import com.example.contacts.home.presenter.HomePresenter;
 
 public class HomeActivity extends AppCompatActivity implements ContactFragment.OnItemSelectedListener {
+
+    private UserDTO userDTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +21,9 @@ public class HomeActivity extends AppCompatActivity implements ContactFragment.O
                 return;
         }
 
-        ContactFragment contactFragment = ContactFragment.newInstance();
+        userDTO = (UserDTO) this.getIntent().getParcelableExtra("t");
+
+        ContactFragment contactFragment = ContactFragment.newInstance(userDTO.getUserId());
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.home_fragment_container, contactFragment)
@@ -27,7 +31,7 @@ public class HomeActivity extends AppCompatActivity implements ContactFragment.O
     }
 
     @Override
-    public void onItemSelected(DummyContent.DummyItem item) {
+    public void onItemSelected(HomePresenter.DummyItem item) {
 
     }
 }
