@@ -5,6 +5,8 @@
     <string name="user_hint">User</string>
     <string name="password_hint">Password</string>
     <string name="login_button">Login</string>
+    <string name="required_fileds_error">All fields required</string>
+    <string name="user_authorization_error">Invalid user or password</string>
 
 
 </resources>

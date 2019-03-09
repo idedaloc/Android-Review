@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.contacts.R;
+import com.example.contacts.dtos.UserDTO;
 import com.example.contacts.home.HomeActivity;
 
 public class LoginActivity extends AppCompatActivity implements LoginFragment.OnSuccessfullyLoginListener {
@@ -32,9 +33,10 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
 
 
     @Override
-    public void onSuccessfullyLogin(String user) {
+    public void onSuccessfullyLogin(UserDTO userDTO) {
         Intent intent = new Intent(this, HomeActivity.class);
-        intent.putExtra(USER,user);
+        intent.putExtra(USER, userDTO);
         startActivity(intent);
+        finish();
     }
 }

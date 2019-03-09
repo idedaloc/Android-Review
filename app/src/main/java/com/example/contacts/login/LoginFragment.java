@@ -11,13 +11,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.example.contacts.R;
+import com.example.contacts.dtos.UserDTO;
+import com.example.contacts.login.presenter.LoginPresenter;
 import com.google.common.hash.Hashing;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Optional;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,15 +33,13 @@ import java.security.NoSuchAlgorithmException;
  */
 public class LoginFragment extends Fragment {
 
-    private String mUserName;
-    private String mPassword;
+    private UserDTO mUserDTO;
     private EditText mUserNameET;
     private EditText mPasswordET;
     private Button mLoginB;
 
-    private MessageDigest mMessageDigest;
-
     private OnSuccessfullyLoginListener mListener;
+    private String mErrorMessage;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -70,14 +72,27 @@ public class LoginFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mUserName = mUserNameET. getText().toString();
+                        mUserDTO = new UserDTO();
 
-                        mPassword = Hashing.sha256()
-                                    .hashString(mPasswordET.getText().toString(), StandardCharsets.UTF_8)
-                                    .toString();
+                        String userName = mUserNameET.getText().toString();
+                        String password = mPasswordET.getText().toString();
 
-                        mListener.onSuccessfullyLogin(mUserName);
+                        if(userName == null || password == null)
+                            Toast.makeText(getActivity().getApplication(),R.string.required_fileds_error,Toast.LENGTH_SHORT).show();
+
+                        mUserDTO.setUserName(userName);
+
+                        mUserDTO.setPassword(Hashing.sha256()
+                                    .hashString(password, StandardCharsets.UTF_8)
+                                    .toString());
+
+                        if(LoginPresenter.validateLogin(mUserDTO).isAuthorized())
+                            mListener.onSuccessfullyLogin(mUserDTO);
+                        else
+                            Toast.makeText(getActivity().getApplicationContext(),R.string.user_authorization_error,Toast.LENGTH_SHORT).show();
                     }
+
+
                 });
     }
 
@@ -127,6 +142,8 @@ public class LoginFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnSuccessfullyLoginListener {
-        void onSuccessfullyLogin(String user);
+        void onSuccessfullyLogin(UserDTO userDTO);
     }
+
+
 }
