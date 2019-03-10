@@ -1,16 +1,17 @@
 package com.example.contacts.login;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.example.contacts.R;
 import com.example.contacts.dtos.UserDTO;
 import com.example.contacts.home.HomeActivity;
+import com.example.contacts.login.presenter.LoginPresenter;
 
-import java.io.Serializable;
+public class LoginActivity extends AppCompatActivity implements LoginFragment.OnSuccessfullyLoginListener{
 
-public class LoginActivity extends AppCompatActivity implements LoginFragment.OnSuccessfullyLoginListener {
+    private LoginPresenter mLoginPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,8 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
         getSupportFragmentManager().beginTransaction()
                                     .add(R.id.login_fragment_container, loginFragment)
                                     .commit();
+
+        mLoginPresenter = new LoginPresenter(loginFragment);
     }
 
 
