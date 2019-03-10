@@ -1,25 +1,30 @@
 package com.example.contacts.home.presenter;
 
+import com.example.contacts.dtos.ContactDTO;
+import com.example.contacts.home.HomeContract;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HomePresenter {
+public class HomePresenter implements HomeContract.Presenter {
 
+    HomeContract.View homeView;
 
-    private final List<HomePresenter.DummyItem> ITEMS = new ArrayList<HomePresenter.DummyItem>();
+    private final List<ContactDTO> ITEMS = new ArrayList<>();
 
-    private final Map<String, HomePresenter.DummyItem> ITEM_MAP = new HashMap<String, HomePresenter.DummyItem>();
+    private final Map<Integer, ContactDTO> ITEM_MAP = new HashMap<>();
 
     private static final int COUNT = 25;
 
     private Long userId;
 
-    public List<HomePresenter.DummyItem> getList(){
+    public List<ContactDTO> getList(Long userId){
+        buildList(userId);
         return ITEMS;
     }
-    public HomePresenter(Long userId) {
+    public void buildList(Long userId) {
         if(userId == 1) {
 
             for (int i = 1; i <= COUNT / 2; i++) {
@@ -33,36 +38,25 @@ public class HomePresenter {
         }
     }
 
-    private void addItem(HomePresenter.DummyItem item) {
+    private void addItem(ContactDTO item) {
         ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
+        ITEM_MAP.put(item.getContactId(), item);
     }
 
-    private static HomePresenter.DummyItem createDummyItem(int position) {
-        return new HomePresenter.DummyItem(String.valueOf(position), "Item " + position, makeDetails(position));
-    }
-
-    private static String makeDetails(int position) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Details about Item: ").append(position);
-        return builder.toString();
+    private static ContactDTO createDummyItem(int position) {
+        return new ContactDTO(position, "Item " + position, 1234l);
     }
 
 
-    public static class DummyItem {
-        public final String id;
-        public final String content;
-        public final String details;
+    public HomePresenter(HomeContract.View homeView) {
+        this.homeView = homeView;
 
-        public DummyItem(String id, String content, String details) {
-            this.id = id;
-            this.content = content;
-            this.details = details;
-        }
-
-        @Override
-        public String toString() {
-            return content;
-        }
+        homeView.setPresenter(this);
     }
+
+    @Override
+    public void getContactList(Long userId) {
+        homeView.showContactList(getList(userId));
+    }
+
 }

@@ -7,23 +7,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.contacts.R;
+import com.example.contacts.dtos.ContactDTO;
 import com.example.contacts.home.ContactFragment.OnItemSelectedListener;
 import com.example.contacts.home.presenter.HomePresenter;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link } and makes a call to the
- * specified {@link ContactFragment.OnItemSelectedListener}.
- * TODO: Replace the implementation with code for your data type.
- */
-public class MyContactRecyclerViewAdapter extends RecyclerView.Adapter<MyContactRecyclerViewAdapter.ViewHolder> {
+public class contactRecyclerViewAdapter extends RecyclerView.Adapter<contactRecyclerViewAdapter.ViewHolder> {
 
-    private final List<HomePresenter.DummyItem> mValues;
+    private final List<ContactDTO> mContacts;
     private final OnItemSelectedListener mListener;
 
-    public MyContactRecyclerViewAdapter(List<HomePresenter.DummyItem> items, OnItemSelectedListener listener) {
-        mValues = items;
+    public contactRecyclerViewAdapter(List<ContactDTO> contacts, OnItemSelectedListener listener) {
+        mContacts = contacts;
         mListener = listener;
     }
 
@@ -36,9 +32,10 @@ public class MyContactRecyclerViewAdapter extends RecyclerView.Adapter<MyContact
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mContact = mContacts.get(position);
+        holder.mContactIdView.setText(String.valueOf(mContacts.get(position).getContactId()));
+        holder.mContactNameView.setText(mContacts.get(position).getContactName());
+        holder.mContactPhoneView.setText(String.valueOf(mContacts.get(position).getPhone()));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +43,7 @@ public class MyContactRecyclerViewAdapter extends RecyclerView.Adapter<MyContact
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onItemSelected(holder.mItem);
+                    mListener.onItemSelected(holder.mContact);
                 }
             }
         });
@@ -54,25 +51,30 @@ public class MyContactRecyclerViewAdapter extends RecyclerView.Adapter<MyContact
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mContacts.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public HomePresenter.DummyItem mItem;
+        public final TextView mContactIdView;
+        public final TextView mContactNameView;
+        public final TextView mContactPhoneView;
+
+        public ContactDTO mContact;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mContactIdView = (TextView) view.findViewById(R.id.textView_contactId);
+            mContactNameView = (TextView) view.findViewById(R.id.textView_contactName);
+            mContactPhoneView = (TextView) view.findViewById(R.id.textView_phone);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mContactIdView.getText() + "'";
         }
     }
+
+
 }

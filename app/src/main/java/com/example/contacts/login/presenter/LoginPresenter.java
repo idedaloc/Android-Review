@@ -11,10 +11,10 @@ import java.util.concurrent.ExecutionException;
 
 public class LoginPresenter implements LoginContract.Presenter {
 
-    LoginContract.View mLoginLoginView;
+    LoginContract.View mLoginView;
 
     public LoginPresenter(LoginContract.View loginLoginView) {
-        this.mLoginLoginView = loginLoginView;
+        this.mLoginView = loginLoginView;
 
         loginLoginView.setPresenter(this);
     }
@@ -36,9 +36,9 @@ public class LoginPresenter implements LoginContract.Presenter {
 
 
         if(validatedUser.isAuthorized())
-            mLoginLoginView.continueSuccessfullyLogin(validatedUser);
+            mLoginView.continueSuccessfullyLogin(validatedUser);
         else
-            mLoginLoginView.displayAuthenticationError();
+            mLoginView.displayAuthenticationError();
 
     }
 
