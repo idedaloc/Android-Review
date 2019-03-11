@@ -7,18 +7,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.contacts.R;
-import com.example.contacts.dtos.ContactDTO;
 import com.example.contacts.home.ContactFragment.OnItemSelectedListener;
-import com.example.contacts.home.presenter.HomePresenter;
+import com.example.contacts.home.model.Contact;
 
 import java.util.List;
 
 public class contactRecyclerViewAdapter extends RecyclerView.Adapter<contactRecyclerViewAdapter.ViewHolder> {
 
-    private final List<ContactDTO> mContacts;
+    private final List<Contact> mContacts;
     private final OnItemSelectedListener mListener;
 
-    public contactRecyclerViewAdapter(List<ContactDTO> contacts, OnItemSelectedListener listener) {
+    public contactRecyclerViewAdapter(List<Contact> contacts, OnItemSelectedListener listener) {
         mContacts = contacts;
         mListener = listener;
     }
@@ -60,7 +59,7 @@ public class contactRecyclerViewAdapter extends RecyclerView.Adapter<contactRecy
         public final TextView mContactNameView;
         public final TextView mContactPhoneView;
 
-        public ContactDTO mContact;
+        public Contact mContact;
 
         public ViewHolder(View view) {
             super(view);

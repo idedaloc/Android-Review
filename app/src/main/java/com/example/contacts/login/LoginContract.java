@@ -10,6 +10,8 @@ public interface LoginContract {
 
         void displayAuthenticationError();
 
+        void displayServerError();
+
         void continueSuccessfullyLogin(UserDTO user);
 
     }
@@ -18,5 +20,18 @@ public interface LoginContract {
 
         void validateCredentials(UserDTO user);
 
+    }
+
+    interface Model{
+
+        interface ModelCallbackListener{
+
+            void OnSuccess(UserDTO user);
+
+            void onFailure();
+
+        }
+
+        void getValidation(ModelCallbackListener listener, UserDTO user);
     }
 }

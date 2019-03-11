@@ -5,9 +5,15 @@
     <string name="user_hint">User</string>
     <string name="password_hint">Password</string>
     <string name="login_button">Login</string>
+
+    <!--Error messages-->
     <string name="required_fileds_error">All fields required</string>
     <string name="user_authorization_error">Invalid user or password</string>
+
+    <!--Login Activity-Fragment-->
     <string name="user_login_home">com.example.contacts.login.USER</string>
+    <string name="user_id">user_id</string>
+    <string name="server_error">Server error</string>
 
 
 </resources>

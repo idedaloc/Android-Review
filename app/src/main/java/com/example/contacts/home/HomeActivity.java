@@ -4,8 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.contacts.R;
-import com.example.contacts.dtos.ContactDTO;
 import com.example.contacts.dtos.UserDTO;
+import com.example.contacts.home.model.Contact;
 import com.example.contacts.home.presenter.HomePresenter;
 
 public class HomeActivity extends AppCompatActivity implements ContactFragment.OnItemSelectedListener {
@@ -37,7 +37,7 @@ public class HomeActivity extends AppCompatActivity implements ContactFragment.O
     }
 
     @Override
-    public void onItemSelected(ContactDTO item) {
+    public void onItemSelected(Contact item) {
 
     }
 }

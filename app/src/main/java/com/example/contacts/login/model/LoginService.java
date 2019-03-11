@@ -6,7 +6,6 @@ import retrofit2.http.POST;
 
 public interface LoginService {
 
-    @POST("/login/validation")
-    Call<User> validateLoginCredentials(@Body User user);
-
+    @POST("login")
+    Call<User> postValidateLoginCredentials(@Body User user);
 }

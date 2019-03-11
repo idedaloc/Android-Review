@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.contacts.R;
-import com.example.contacts.dtos.ContactDTO;
+import com.example.contacts.home.model.Contact;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +20,12 @@ public class ContactFragment extends Fragment implements HomeContract.View {
     private static final String USER = "user";
 
     private Long userId;
+    private RecyclerView recyclerView;
     private OnItemSelectedListener mListener;
 
     private HomeContract.Presenter mPresenter;
 
-    List<ContactDTO> mContactsList = new ArrayList<>();
+    List<Contact> mContactsList = new ArrayList<>();
 
     public ContactFragment() {
     }
@@ -51,20 +52,15 @@ public class ContactFragment extends Fragment implements HomeContract.View {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contact_list, container, false);
 
-        mPresenter.getContactList(this.userId);
-
-        // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-
-
-
             //DummyContent.setSelection()
-
-            recyclerView.setAdapter(new contactRecyclerViewAdapter(mContactsList, mListener));
         }
+
+        mPresenter.getContactList(this.userId);
+
         return view;
     }
 
@@ -92,8 +88,9 @@ public class ContactFragment extends Fragment implements HomeContract.View {
     }
 
     @Override
-    public void showContactList(List<ContactDTO> contacts) {
+    public void showContactList(List<Contact> contacts) {
         this.mContactsList = contacts;
+        recyclerView.setAdapter(new contactRecyclerViewAdapter(this.mContactsList, mListener));
     }
 
     @Override
@@ -102,6 +99,6 @@ public class ContactFragment extends Fragment implements HomeContract.View {
     }
 
     public interface OnItemSelectedListener {
-        void onItemSelected(ContactDTO contactDTO);
+        void onItemSelected(Contact Contact);
     }
 }

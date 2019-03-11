@@ -117,8 +117,13 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     }
 
     @Override
-    public void displayAuthenticationError() {
-        Toast.makeText(getActivity().getApplicationContext(),R.string.user_authorization_error,Toast.LENGTH_SHORT).show();
+    public void displayAuthenticationError () {
+        Toast.makeText(getActivity().getApplicationContext(),getResources().getString(R.string.user_authorization_error),Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void displayServerError() {
+        Toast.makeText(getActivity().getApplicationContext(),getResources().getString(R.string.server_error),Toast.LENGTH_SHORT).show();
     }
 
     @Override
