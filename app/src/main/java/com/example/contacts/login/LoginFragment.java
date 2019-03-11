@@ -24,12 +24,14 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements LoginContract.View {
 
     private UserDTO mUserDTO;
     private EditText mUserNameET;
     private EditText mPasswordET;
     private Button mLoginB;
+
+    private LoginContract.Presenter mPresenter;
 
     private OnSuccessfullyLoginListener mListener;
 
@@ -51,6 +53,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         mLoginB.setOnClickListener(
 
                 //() -> System.out.print("**********************"));
@@ -71,16 +74,15 @@ public class LoginFragment extends Fragment {
                                     .hashString(password, StandardCharsets.UTF_8)
                                     .toString());
 
-                        UserDTO validatedUserDTO = LoginPresenter.validateLogin(mUserDTO);
+                        validateCredentials(mUserDTO);
 
-                        if(validatedUserDTO.isAuthorized())
-                            mListener.onSuccessfullyLogin(validatedUserDTO);
-                        else
-                            Toast.makeText(getActivity().getApplicationContext(),R.string.user_authorization_error,Toast.LENGTH_SHORT).show();
                     }
 
-
                 });
+    }
+
+    private void validateCredentials(UserDTO mUserDTO) {
+        mPresenter.validateCredentials(mUserDTO);
     }
 
     @Override
@@ -112,6 +114,26 @@ public class LoginFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void displayAuthenticationError () {
+        Toast.makeText(getActivity().getApplicationContext(),getResources().getString(R.string.user_authorization_error),Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void displayServerError() {
+        Toast.makeText(getActivity().getApplicationContext(),getResources().getString(R.string.server_error),Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void continueSuccessfullyLogin(UserDTO user) {
+        mListener.onSuccessfullyLogin(user);
+    }
+
+    @Override
+    public void setPresenter(LoginContract.Presenter presenter) {
+        this.mPresenter = presenter;
     }
 
     public interface OnSuccessfullyLoginListener {

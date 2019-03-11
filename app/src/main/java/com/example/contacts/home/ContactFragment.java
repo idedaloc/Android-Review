@@ -3,6 +3,7 @@ package com.example.contacts.home;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,22 +11,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.contacts.R;
-import com.example.contacts.home.presenter.HomePresenter;
+import com.example.contacts.home.model.Contact;
 
-public class ContactFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ContactFragment extends Fragment implements HomeContract.View {
 
     private static final String USER = "user";
 
     private Long userId;
+    private RecyclerView recyclerView;
     private OnItemSelectedListener mListener;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private HomeContract.Presenter mPresenter;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
+    List<Contact> mContactsList = new ArrayList<>();
+    private ContactRecyclerViewAdapter mContactRecyclerViewAdapter;
+
     public ContactFragment() {
     }
-
 
     public static ContactFragment newInstance(Long userId) {
         ContactFragment fragment = new ContactFragment();
@@ -40,8 +45,9 @@ public class ContactFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            userId = getArguments().getLong(USER);
+            this.userId = getArguments().getLong(USER);
         }
+
     }
 
     @Override
@@ -49,19 +55,24 @@ public class ContactFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contact_list, container, false);
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        Context context = view.getContext();
+        recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        //DummyContent.setSelection()
 
-            //DummyContent.setSelection()
 
-            recyclerView.setAdapter(new MyContactRecyclerViewAdapter(new HomePresenter(userId).getList(), mListener));
-        }
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.getContactList(userId);
+            }
+        });
+
+        mPresenter.getContactList(this.userId);
+
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -80,18 +91,30 @@ public class ContactFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    @Override
+    public void displayServerError() {
+
+    }
+
+    @Override
+    public void showContactList(List<Contact> contacts) {
+        this.mContactsList = contacts;
+
+        if (mContactRecyclerViewAdapter == null) {
+            mContactRecyclerViewAdapter = new ContactRecyclerViewAdapter(this.mContactsList, mListener);
+            recyclerView.setAdapter(mContactRecyclerViewAdapter);
+        } else
+            mContactRecyclerViewAdapter.updateUponDataChanged(contacts);
+
+    }
+
+    @Override
+    public void setPresenter(HomeContract.Presenter presenter) {
+        this.mPresenter = presenter;
+    }
+
+
     public interface OnItemSelectedListener {
-        // TODO: Update argument type and name
-        void onItemSelected(HomePresenter.DummyItem item);
+        void onItemSelected(Contact Contact);
     }
 }
