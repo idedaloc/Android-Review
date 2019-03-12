@@ -67,7 +67,7 @@ public class ContactRecyclerViewAdapter extends RecyclerView.Adapter<ContactRecy
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            cardView = (CardView)itemView.findViewById(R.id.card_view);
+            cardView = (CardView) itemView.findViewById(R.id.card_view);
             mContactIdView = (TextView) view.findViewById(R.id.textView_contactId);
             mContactNameView = (TextView) view.findViewById(R.id.textView_contactName);
             mContactPhoneView = (TextView) view.findViewById(R.id.textView_phone);
@@ -80,7 +80,7 @@ public class ContactRecyclerViewAdapter extends RecyclerView.Adapter<ContactRecy
 
     }
 
-    public void updateUponDataChanged(List<Contact> contacts){
+    public void updateUponDataChanged(List<Contact> contacts) {
         mContacts.clear();
         mContacts.addAll(contacts);
         notifyDataSetChanged();

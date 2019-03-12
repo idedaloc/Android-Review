@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.contacts.R;
 import com.example.contacts.home.model.Contact;
@@ -65,6 +66,7 @@ public class ContactFragment extends Fragment implements HomeContract.View {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
                 mPresenter.getContactList(userId);
             }
         });
@@ -93,7 +95,8 @@ public class ContactFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void displayServerError() {
-
+        Toast.makeText(getContext(),getResources().getString(R.string.server_error),Toast.LENGTH_SHORT);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -105,7 +108,7 @@ public class ContactFragment extends Fragment implements HomeContract.View {
             recyclerView.setAdapter(mContactRecyclerViewAdapter);
         } else
             mContactRecyclerViewAdapter.updateUponDataChanged(contacts);
-
+            swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

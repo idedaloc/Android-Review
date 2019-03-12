@@ -1,9 +1,7 @@
 package com.example.contacts.home.model;
 
-import com.example.contacts.login.LoginContract;
 import com.example.contacts.utils.network.ApliClient;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
