@@ -95,8 +95,8 @@ public class ContactFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void displayServerError() {
-        swipeRefreshLayout.setRefreshing(false);
         Toast.makeText(getContext(),getResources().getString(R.string.server_error),Toast.LENGTH_SHORT);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

@@ -13,7 +13,7 @@
         android:layout_marginTop="@dimen/mtrl_card_spacing"
         android:layout_marginRight="@dimen/mtrl_card_spacing"
         android:minHeight="100dp"
-        card_view:cardBackgroundColor="@color/primaryColor"
+        card_view:cardBackgroundColor="@color/secondaryDarkColor"
         card_view:cardElevation="5dp"
         card_view:cardCornerRadius="5dp"
         android:id="@+id/card_view"
