@@ -65,8 +65,10 @@ public class LoginFragment extends Fragment implements LoginContract.View {
                         String userName = mUserNameET.getText().toString();
                         String password = mPasswordET.getText().toString();
 
-                        if(userName.equals("") || password.equals(""))
-                            Toast.makeText(getActivity().getApplication(),R.string.required_fileds_error,Toast.LENGTH_SHORT).show();
+                        if(userName.equals("") || password.equals("")) {
+                            Toast.makeText(getActivity().getApplication(), R.string.required_fileds_error, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
                         mUserDTO.setUserName(userName);
 
